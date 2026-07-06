@@ -86,12 +86,33 @@
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 40px;
+            position: relative;
         }
 
         #painel-admin h2 {
             font-size: 1.3rem;
             margin-bottom: 15px;
             color: var(--cor-primaria);
+        }
+
+        .btn-logout {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: transparent;
+            color: var(--cor-alerta);
+            border: 1px solid var(--cor-alerta);
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: var(--cor-alerta);
+            color: white;
         }
 
         .form-grupo {
@@ -151,7 +172,7 @@
         }
 
         .btn-excluir {
-            display: none; /* Oculto por padrão para clientes */
+            display: none;
             position: absolute;
             top: 10px;
             right: 10px;
@@ -171,13 +192,23 @@
             background: #cc3b3b;
         }
 
-        .img-placeholder {
+        .img-container {
             width: 100%;
             height: 180px;
             background: linear-gradient(45deg, #1f2d4a, #131c31);
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        .img-produto {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .img-placeholder {
             color: var(--texto-secundario);
             font-size: 0.9rem;
         }
@@ -231,7 +262,7 @@
 <body>
 
     <header>
-        <button class="btn-admin-trigger" onclick="autenticarAdmin()">Área do Administrador</button>
+        <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="autenticarAdmin()">Área do Administrador</button>
         <h1>Índias Orientais</h1>
         <p>Os produtos mais procurados e recomendados do mercado em um só lugar</p>
     </header>
@@ -240,31 +271,32 @@
         
         <div id="painel-admin">
             <h2>Gerenciador de Vitrine (Exclusivo Administrador)</h2>
+            <button class="btn-logout" onclick="sairAdmin()">Sair do Painel</button>
+            
             <div class="form-grupo">
                 <input type="text" id="novo-nome" placeholder="Nome do Produto">
                 <input type="text" id="nova-categoria" placeholder="Categoria">
                 <input type="text" id="novo-link" placeholder="Link do produto (https://...)">
-                <button onclick="adicionarProduto()">Adicionar à Vitrine</button>
+                <input type="text" id="novo-img" placeholder="Link da imagem (opcional)">
+                <button onclick="adicionarProduto()">Adicionar</button>
             </div>
         </div>
 
         <div class="grid-produtos" id="vitrine">
-            </div>
+            <!-- Os produtos serão injetados aqui -->
+        </div>
     </div>
 
     <script>
-        // Array simulado com exemplos editáveis
         let produtos = [
-            { id: 1, nome: "Smartphone Premium 128GB", categoria: "Eletrônicos", link: "https://www.google.com" },
-            { id: 2, nome: "Fone de Ouvido Bluetooth Noise Cancelling", categoria: "Acessórios", link: "https://www.google.com" },
-            { id: 3, nome: "Smartwatch Esportivo À Prova D'água", categoria: "Vestíveis", link: "https://www.google.com" },
-            { id: 4, nome: "Cadeira Ergonômica de Escritório", categoria: "Móveis", link: "https://www.google.com" },
-            { id: 5, nome: "Caixa de Som Portátil Inteligente", categoria: "Áudio", link: "https://www.google.com" }
+            { id: 1, nome: "Smartphone Premium 128GB", categoria: "Eletrônicos", link: "https://www.google.com", imagem: "" },
+            { id: 2, nome: "Fone de Ouvido Bluetooth Noise Cancelling", categoria: "Acessórios", link: "https://www.google.com", imagem: "" },
+            { id: 3, nome: "Smartwatch Esportivo À Prova D'água", categoria: "Vestíveis", link: "https://www.google.com", imagem: "" }
         ];
 
         const vitrine = document.getElementById('vitrine');
         const senhaMestra = "1zaq2xsw3cde4vfr5bgt6nhy7";
-        let isAdminLogado = false; // Controla se os botões de exclusão devem aparecer
+        let isAdminLogado = false;
 
         function renderizarVitrine() {
             vitrine.innerHTML = "";
@@ -272,13 +304,19 @@
                 const card = document.createElement('div');
                 card.className = 'card-produto';
                 
-                // Determina se o botão de excluir vai aparecer com base no login do admin
                 const estiloBotaoExcluir = isAdminLogado ? 'style="display: block;"' : '';
+
+                // Verifica se o produto tem imagem cadastrada, se não tiver usa o texto padrão
+                const blocoImagem = prod.imagem 
+                    ? `<img src="${prod.imagem}" alt="${prod.nome}" class="img-produto" onerror="this.style.display='none'">`
+                    : `<span class="img-placeholder">Imagem do Produto</span>`;
 
                 card.innerHTML = `
                     <button class="btn-excluir" ${estiloBotaoExcluir} onclick="excluirProduto(${prod.id})">Excluir</button>
                     <div>
-                        <div class="img-placeholder">Imagem do Produto</div>
+                        <div class="img-container">
+                            ${blocoImagem}
+                        </div>
                         <div class="info-produto">
                             <span class="tag-categoria">${prod.categoria}</span>
                             <h3>${prod.nome}</h3>
@@ -295,44 +333,56 @@
             if (entrada === senhaMestra) {
                 isAdminLogado = true;
                 document.getElementById('painel-admin').style.display = 'block';
-                renderizarVitrine(); // Recarrega a vitrine exibindo as opções de exclusão
-                alert("Painel liberado e opções de exclusão ativadas nos cards!");
+                document.getElementById('btn-trigger-topo').style.display = 'none'; // Esconde botão do topo se logado
+                renderizarVitrine();
+                alert("Painel liberado!");
             } else {
                 alert("Acesso negado.");
             }
+        }
+
+        // Nova função para fechar a sessão do administrador
+        function sairAdmin() {
+            isAdminLogado = false;
+            document.getElementById('painel-admin').style.display = 'none';
+            document.getElementById('btn-trigger-topo').style.display = 'block'; // Mostra o botão do topo de volta
+            renderizarVitrine(); // Atualiza para esconder as lixeiras
+            alert("Você saiu da área do administrador.");
         }
 
         function adicionarProduto() {
             const nome = document.getElementById('novo-nome').value;
             const categoria = document.getElementById('nova-categoria').value;
             const link = document.getElementById('novo-link').value;
+            const imagem = document.getElementById('novo-img').value;
 
             if (!nome || !categoria || !link) {
-                alert("Preencha todos os campos.");
+                alert("Preencha os campos obrigatórios (Nome, Categoria e Link).");
                 return;
             }
 
             const novoItem = {
-                id: Date.now(), // Gera um ID único baseado no tempo para evitar conflitos na exclusão
+                id: Date.now(),
                 nome: nome,
                 categoria: categoria,
-                link: link
+                link: link,
+                imagem: imagem // Armazena a URL da imagem colada
             };
 
             produtos.unshift(novoItem);
             renderizarVitrine();
 
+            // Limpa os campos
             document.getElementById('novo-nome').value = "";
             document.getElementById('nova-categoria').value = "";
             document.getElementById('novo-link').value = "";
+            document.getElementById('novo-img').value = "";
         }
 
-        // Nova função para deletar itens do catálogo
         function excluirProduto(idProduto) {
             if (confirm("Tem certeza de que deseja remover este produto da vitrine?")) {
-                // Filtra a lista mantendo apenas os itens que possuem ID diferente do escolhido
                 produtos = produtos.filter(prod => prod.id !== idProduto);
-                renderizarVitrine(); // Atualiza a tela imediatamente
+                renderizarVitrine();
             }
         }
 
