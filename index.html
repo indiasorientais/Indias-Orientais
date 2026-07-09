@@ -11,6 +11,7 @@
             --cor-primaria: #00f2fe;
             --cor-secundaria: #4facfe;
             --cor-alerta: #ff4a4a;
+            --cor-edicao: #ffb703;
             --texto: #ffffff;
             --texto-escuro: #060a13;
             --texto-secundario: #8a99ad;
@@ -51,6 +52,90 @@
             font-size: 1.1rem;
             font-weight: 600;
             opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        /* Botão de Categorias (Canto Superior Esquerdo) */
+        .btn-categorias-wrapper {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+        }
+
+        .btn-categorias-trigger {
+            background: rgba(6, 10, 19, 0.2);
+            color: var(--texto-escuro);
+            border: 1px solid var(--texto-escuro);
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-categorias-trigger:hover {
+            background: var(--texto-escuro);
+            color: var(--cor-primaria);
+        }
+
+        .dropdown-categorias {
+            display: none;
+            position: absolute;
+            top: 35px;
+            left: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--cor-primaria);
+            border-radius: 8px;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            z-index: 100;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .dropdown-categorias button {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            text-align: left;
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .dropdown-categorias button:hover {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--cor-primaria);
+        }
+
+        /* Barra de pesquisa abaixo do Slogan */
+        .busca-container {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .busca-container input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 2px solid transparent;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .busca-container input:focus {
+            border-color: var(--bg-principal);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
         }
 
         .btn-admin-trigger {
@@ -171,11 +256,16 @@
             box-shadow: 0 10px 20px rgba(0, 242, 254, 0.1);
         }
 
-        .btn-excluir {
-            display: none;
+        .acoes-admin-card {
+            display: none; /* Oculto para clientes */
             position: absolute;
             top: 10px;
             right: 10px;
+            z-index: 10;
+            gap: 5px;
+        }
+
+        .btn-excluir {
             background: var(--cor-alerta);
             color: white;
             border: none;
@@ -184,13 +274,24 @@
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
-            z-index: 10;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        .btn-excluir:hover {
-            background: #cc3b3b;
+        .btn-excluir:hover { background: #cc3b3b; }
+
+        .btn-editar {
+            background: var(--cor-edicao);
+            color: var(--texto-escuro);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
+
+        .btn-editar:hover { background: #e0a100; }
 
         .img-container {
             width: 100%;
@@ -254,65 +355,118 @@
             cursor: pointer;
         }
 
-        .btn-acesso:hover {
-            opacity: 0.9;
-        }
+        .btn-acesso:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 
     <header>
+        <!-- Menu de Categorias à Esquerda -->
+        <div class="btn-categorias-wrapper">
+            <button class="btn-categorias-trigger" onclick="toggleAbasCategorias()">Categorias ▾</button>
+            <div class="dropdown-categorias" id="dropdown-cats">
+                <!-- Injetado dinamicamente via JS -->
+            </div>
+        </div>
+
         <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="autenticarAdmin()">Área do Administrador</button>
         <h1>Índias Orientais</h1>
         <p>Os produtos mais procurados e recomendados do mercado em um só lugar</p>
+
+        <!-- Barra de Busca Avançada -->
+        <div class="busca-container">
+            <input type="text" id="campo-busca" oninput="filtrarProdutos()" placeholder="🔍 O que você está procurando hoje?">
+        </div>
     </header>
 
     <div class="container">
         
         <div id="painel-admin">
-            <h2>Gerenciador de Vitrine (Exclusivo Administrador)</h2>
+            <h2 id="titulo-painel">Gerenciador de Vitrine (Exclusivo Administrador)</h2>
             <button class="btn-logout" onclick="sairAdmin()">Sair do Painel</button>
             
             <div class="form-grupo">
+                <input type="hidden" id="id-edicao">
                 <input type="text" id="novo-nome" placeholder="Nome do Produto">
                 <input type="text" id="nova-categoria" placeholder="Categoria">
                 <input type="text" id="novo-link" placeholder="Link do produto (https://...)">
                 <input type="text" id="novo-img" placeholder="Link da imagem (opcional)">
-                <button onclick="adicionarProduto()">Adicionar</button>
+                <button id="btn-salvar" onclick="salvarProduto()">Adicionar</button>
             </div>
         </div>
 
         <div class="grid-produtos" id="vitrine">
-            <!-- Os produtos serão injetados aqui -->
+            <!-- Injetado via JS -->
         </div>
     </div>
 
     <script>
-        let produtos = [
+        // Carrega os itens salvos no navegador ou inicia com dados base
+        let produtos = JSON.parse(localStorage.getItem('produtos_indias')) || [
             { id: 1, nome: "Smartphone Premium 128GB", categoria: "Eletrônicos", link: "https://www.google.com", imagem: "" },
             { id: 2, nome: "Fone de Ouvido Bluetooth Noise Cancelling", categoria: "Acessórios", link: "https://www.google.com", imagem: "" },
             { id: 3, nome: "Smartwatch Esportivo À Prova D'água", categoria: "Vestíveis", link: "https://www.google.com", imagem: "" }
         ];
 
         const vitrine = document.getElementById('vitrine');
-        const senhaMestra = "1zaq2xsw3cde4vfr5bgt6nhy7";
+        const dropdownCats = document.getElementById('dropdown-cats');
+        const senhaMestra = "admin123";
         let isAdminLogado = false;
+        let categoriaSelecionada = "Todas";
 
-        function renderizarVitrine() {
+        function atualizarArmazenamento() {
+            localStorage.setItem('produtos_indias', JSON.stringify(produtos));
+            renderizarMenuCategorias();
+        }
+
+        function renderizarMenuCategorias() {
+            const categoriasUnicas = ["Todas", ...new Set(produtos.map(p => p.categoria))];
+            dropdownCats.innerHTML = "";
+            categoriasUnicas.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    categoriaSelecionada = cat;
+                    filtrarProdutos();
+                    dropdownCats.style.display = 'none';
+                };
+                dropdownCats.appendChild(btn);
+            });
+        }
+
+        function toggleAbasCategorias() {
+            dropdownCats.style.display = dropdownCats.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Fecha as categorias se clicar fora delas
+        window.onclick = function(event) {
+            if (!event.target.matches('.btn-categorias-trigger')) {
+                dropdownCats.style.display = 'none';
+            }
+        }
+
+        function renderizarVitrine(listaProdutos = produtos) {
             vitrine.innerHTML = "";
-            produtos.forEach(prod => {
+            
+            if (listaProdutos.length === 0) {
+                vitrine.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--texto-secundario); margin-top: 20px;">Nenhum produto encontrado.</p>`;
+                return;
+            }
+
+            listaProdutos.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'card-produto';
                 
-                const estiloBotaoExcluir = isAdminLogado ? 'style="display: block;"' : '';
-
-                // Verifica se o produto tem imagem cadastrada, se não tiver usa o texto padrão
+                const exibicaoAdmin = isAdminLogado ? 'style="display: flex;"' : '';
                 const blocoImagem = prod.imagem 
-                    ? `<img src="${prod.imagem}" alt="${prod.nome}" class="img-produto" onerror="this.style.display='none'">`
+                    ? `<img src="${prod.imagem}" alt="${prod.nome}" class="img-produto" onerror="this.src=''; this.parentElement.innerHTML='<span class=\"img-placeholder\">Imagem indisponível</span>'">`
                     : `<span class="img-placeholder">Imagem do Produto</span>`;
 
                 card.innerHTML = `
-                    <button class="btn-excluir" ${estiloBotaoExcluir} onclick="excluirProduto(${prod.id})">Excluir</button>
+                    <div class="acoes-admin-card" ${exibicaoAdmin}>
+                        <button class="btn-editar" onclick="carregarEdicao(${prod.id})">Editar</button>
+                        <button class="btn-excluir" onclick="excluirProduto(${prod.id})">Excluir</button>
+                    </div>
                     <div>
                         <div class="img-container">
                             ${blocoImagem}
@@ -328,29 +482,44 @@
             });
         }
 
+        // Filtra os produtos usando tanto a barra de busca quanto a categoria selecionada
+        function filtrarProdutos() {
+            const termoBusca = document.getElementById('campo-busca').value.toLowerCase();
+            
+            const filtrados = produtos.filter(prod => {
+                const atendeFiltroCategoria = (categoriaSelecionada === "Todas" || prod.categoria === categoriaSelecionada);
+                const atendeFiltroBusca = prod.nome.toLowerCase().includes(termoBusca) || prod.categoria.toLowerCase().includes(termoBusca);
+                return atendeFiltroCategoria && atendeFiltroBusca;
+            });
+
+            renderizarVitrine(filtrados);
+        }
+
         function autenticarAdmin() {
             const entrada = prompt("Digite a senha de administrador:");
             if (entrada === senhaMestra) {
                 isAdminLogado = true;
                 document.getElementById('painel-admin').style.display = 'block';
-                document.getElementById('btn-trigger-topo').style.display = 'none'; // Esconde botão do topo se logado
+                document.getElementById('btn-trigger-topo').style.display = 'none';
                 renderizarVitrine();
-                alert("Painel liberado!");
+                alert("Painel de gerenciamento aberto!");
             } else {
                 alert("Acesso negado.");
             }
         }
 
-        // Nova função para fechar a sessão do administrador
         function sairAdmin() {
             isAdminLogado = false;
             document.getElementById('painel-admin').style.display = 'none';
-            document.getElementById('btn-trigger-topo').style.display = 'block'; // Mostra o botão do topo de volta
-            renderizarVitrine(); // Atualiza para esconder as lixeiras
+            document.getElementById('btn-trigger-topo').style.display = 'block';
+            limparFormulario();
+            renderizarVitrine();
             alert("Você saiu da área do administrador.");
         }
 
-        function adicionarProduto() {
+        // Combina adicionar novo e salvar edição em um só lugar
+        function salvarProduto() {
+            const idEdicao = document.getElementById('id-edicao').value;
             const nome = document.getElementById('novo-nome').value;
             const categoria = document.getElementById('nova-categoria').value;
             const link = document.getElementById('novo-link').value;
@@ -361,32 +530,68 @@
                 return;
             }
 
-            const novoItem = {
-                id: Date.now(),
-                nome: nome,
-                categoria: categoria,
-                link: link,
-                imagem: imagem // Armazena a URL da imagem colada
-            };
+            if (idEdicao) {
+                // Modo Edição: Altera o item existente
+                const index = produtos.findIndex(p => p.id == idEdicao);
+                if (index !== -1) {
+                    produtos[index] = { id: parseInt(idEdicao), nome, categoria, link, imagem };
+                    alert("Produto atualizado com sucesso!");
+                }
+            } else {
+                // Modo Inserção: Cria um novo item
+                const novoItem = { id: Date.now(), nome, categoria, link, imagem };
+                produtos.unshift(novoItem);
+                alert("Produto adicionado à vitrine!");
+            }
 
-            produtos.unshift(novoItem);
-            renderizarVitrine();
+            atualizarArmazenamento();
+            filtrarProdutos();
+            limparFormulario();
+        }
 
-            // Limpa os campos
+        // Puxa as informações do card de volta para os campos do painel
+        function carregarEdicao(idProduto) {
+            const prod = produtos.find(p => p.id === idProduto);
+            if (!prod) return;
+
+            document.getElementById('id-edicao').value = prod.id;
+            document.getElementById('novo-nome').value = prod.nome;
+            document.getElementById('nova-categoria').value = prod.categoria;
+            document.getElementById('novo-link').value = prod.link;
+            document.getElementById('novo-img').value = prod.imagem;
+
+            // Altera o visual do formulário para destacar a edição
+            document.getElementById('titulo-painel').innerText = "✏️ Editando Produto Selecionado";
+            document.getElementById('btn-salvar').innerText = "Salvar Alterações";
+            document.getElementById('btn-salvar').style.background = "var(--cor-edicao)";
+            
+            // Rola a página suavemente até o formulário de edição
+            document.getElementById('painel-admin').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function limparFormulario() {
+            document.getElementById('id-edicao').value = "";
             document.getElementById('novo-nome').value = "";
             document.getElementById('nova-categoria').value = "";
             document.getElementById('novo-link').value = "";
             document.getElementById('novo-img').value = "";
+
+            document.getElementById('titulo-painel').innerText = "Gerenciador de Vitrine (Exclusivo Administrador)";
+            document.getElementById('btn-salvar').innerText = "Adicionar";
+            document.getElementById('btn-salvar').style.background = "var(--cor-primaria)";
         }
 
         function excluirProduto(idProduto) {
-            if (confirm("Tem certeza de que deseja remover este produto da vitrine?")) {
+            if (confirm("Tem certeza de que deseja remover este produto definitivamente?")) {
                 produtos = produtos.filter(prod => prod.id !== idProduto);
-                renderizarVitrine();
+                atualizarArmazenamento();
+                filtrarProdutos();
             }
         }
 
+        // Inicialização da página
+        renderizarMenuCategorias();
         renderizarVitrine();
     </script>
 </body>
-</html>
+</html>b
