@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Índias Orientais - Hub de Revendas</title>
+    <title>Comércio das Índias Ocidentais - Hub de Revendas</title>
     <style>
         :root {
-            --bg-principal: #0a0f1d;
-            --bg-card: #131c31;
-            --cor-primaria: #00f2fe;
-            --cor-secundaria: #4facfe;
-            --cor-alerta: #ff4a4a;
-            --cor-edicao: #ffb703;
-            --texto: #ffffff;
-            --texto-escuro: #060a13;
-            --texto-secundario: #8a99ad;
+            --bg-principal: #0b140e;
+            --bg-card: #142419;
+            --cor-primaria: #2e7d32;
+            --cor-primaria-hover: #388e3c;
+            --cor-secundaria: #81c784;
+            --cor-alerta: #e53935;
+            --texto: #f1f8f3;
+            --texto-escuro: #0a120b;
+            --texto-secundario: #a3c2a6;
+            --header-bg: linear-gradient(135deg, #1b4332, #2d6a4f);
+            --card-border: rgba(129, 199, 132, 0.15);
         }
 
         * {
@@ -31,11 +33,23 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--cor-secundaria), var(--cor-primaria));
+            background: var(--header-bg);
             padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 4px 20px rgba(46, 125, 50, 0.25);
             position: relative;
+            border-bottom: 2px solid #388e3c;
+        }
+
+        .logo-header {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            height: 75px;
+            width: auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            object-fit: contain;
         }
 
         header h1 {
@@ -43,119 +57,36 @@
             font-weight: 900;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: var(--texto-escuro);
+            color: #ffffff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
         header p {
             margin-top: 10px;
-            color: var(--texto-escuro);
+            color: var(--cor-secundaria);
             font-size: 1.1rem;
             font-weight: 600;
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
-
-        /* Botão de Categorias (Canto Superior Esquerdo) */
-        .btn-categorias-wrapper {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-        }
-
-        .btn-categorias-trigger {
-            background: rgba(6, 10, 19, 0.2);
-            color: var(--texto-escuro);
-            border: 1px solid var(--texto-escuro);
-            padding: 6px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .btn-categorias-trigger:hover {
-            background: var(--texto-escuro);
-            color: var(--cor-primaria);
-        }
-
-        .dropdown-categorias {
-            display: none;
-            position: absolute;
-            top: 35px;
-            left: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--cor-primaria);
-            border-radius: 8px;
-            min-width: 180px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            z-index: 100;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .dropdown-categorias button {
-            display: block;
-            width: 100%;
-            padding: 10px 15px;
-            text-align: left;
-            background: transparent;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 0.85rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .dropdown-categorias button:hover {
-            background: rgba(0, 242, 254, 0.1);
-            color: var(--cor-primaria);
-        }
-
-        /* Barra de pesquisa abaixo do Slogan */
-        .busca-container {
-            max-width: 500px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .busca-container input {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 30px;
-            border: 2px solid transparent;
-            background-color: #ffffff;
-            color: #000000;
-            font-size: 1rem;
-            font-weight: 500;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .busca-container input:focus {
-            border-color: var(--bg-principal);
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+            opacity: 0.95;
         }
 
         .btn-admin-trigger {
             position: absolute;
             top: 15px;
-            right: 20px;
-            background: rgba(6, 10, 19, 0.2);
-            color: var(--texto-escuro);
-            border: 1px solid var(--texto-escuro);
-            padding: 6px 12px;
+            left: 20px;
+            background: rgba(10, 18, 11, 0.4);
+            color: #ffffff;
+            border: 1px solid var(--cor-secundaria);
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.2s;
         }
 
         .btn-admin-trigger:hover {
-            background: var(--texto-escuro);
-            color: var(--cor-primaria);
+            background: var(--cor-secundaria);
+            color: var(--texto-escuro);
         }
 
         .container {
@@ -167,7 +98,7 @@
         #painel-admin {
             display: none;
             background: var(--bg-card);
-            border: 2px dashed var(--cor-primaria);
+            border: 2px dashed var(--cor-secundaria);
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 40px;
@@ -177,7 +108,7 @@
         #painel-admin h2 {
             font-size: 1.3rem;
             margin-bottom: 15px;
-            color: var(--cor-primaria);
+            color: var(--cor-secundaria);
         }
 
         .btn-logout {
@@ -187,7 +118,7 @@
             background: transparent;
             color: var(--cor-alerta);
             border: 1px solid var(--cor-alerta);
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
@@ -208,8 +139,8 @@
         }
 
         .form-grupo input {
-            background: #1f2d4a;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #1c3323;
+            border: 1px solid rgba(255,255,255,0.15);
             padding: 10px;
             border-radius: 6px;
             color: white;
@@ -218,18 +149,23 @@
 
         .form-grupo input:focus {
             outline: none;
-            border-color: var(--cor-primaria);
+            border-color: var(--cor-secundaria);
         }
 
         .form-grupo button {
-            background: var(--cor-primaria);
-            color: var(--bg-principal);
+            background: var(--cor-secundaria);
+            color: var(--texto-escuro);
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
             font-weight: 700;
             cursor: pointer;
             height: 40px;
+            transition: background 0.2s;
+        }
+
+        .form-grupo button:hover {
+            background: #a5d6a7;
         }
 
         .grid-produtos {
@@ -242,7 +178,7 @@
             background-color: var(--bg-card);
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
             transition: transform 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -252,20 +188,15 @@
 
         .card-produto:hover {
             transform: translateY(-5px);
-            border-color: var(--cor-primaria);
-            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.1);
-        }
-
-        .acoes-admin-card {
-            display: none; /* Oculto para clientes */
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-            gap: 5px;
+            border-color: var(--cor-secundaria);
+            box-shadow: 0 10px 20px rgba(46, 125, 50, 0.2);
         }
 
         .btn-excluir {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
             background: var(--cor-alerta);
             color: white;
             border: none;
@@ -274,29 +205,18 @@
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
+            z-index: 10;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        .btn-excluir:hover { background: #cc3b3b; }
-
-        .btn-editar {
-            background: var(--cor-edicao);
-            color: var(--texto-escuro);
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        .btn-excluir:hover {
+            background: #c62828;
         }
-
-        .btn-editar:hover { background: #e0a100; }
 
         .img-container {
             width: 100%;
             height: 180px;
-            background: linear-gradient(45deg, #1f2d4a, #131c31);
+            background: linear-gradient(45deg, #1c3323, #142419);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -331,8 +251,8 @@
 
         .tag-categoria {
             display: inline-block;
-            background: rgba(0, 242, 254, 0.1);
-            color: var(--cor-primaria);
+            background: rgba(129, 199, 132, 0.15);
+            color: var(--cor-secundaria);
             font-size: 0.75rem;
             padding: 3px 8px;
             border-radius: 4px;
@@ -343,8 +263,8 @@
         .btn-acesso {
             display: block;
             width: 100%;
-            background: linear-gradient(90deg, var(--cor-secundaria), var(--cor-primaria));
-            color: var(--bg-principal);
+            background: linear-gradient(90deg, #2e7d32, #388e3c);
+            color: #ffffff;
             text-align: center;
             padding: 12px;
             text-decoration: none;
@@ -355,156 +275,114 @@
             cursor: pointer;
         }
 
-        .btn-acesso:hover { opacity: 0.9; }
+        .btn-acesso:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Menu de Categorias à Esquerda -->
-        <div class="btn-categorias-wrapper">
-            <button class="btn-categorias-trigger" onclick="toggleAbasCategorias()">Categorias ▾</button>
-            <div class="dropdown-categorias" id="dropdown-cats">
-                <!-- Injetado dinamicamente via JS -->
-            </div>
-        </div>
-
         <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="autenticarAdmin()">Área do Administrador</button>
-        <h1>Índias Orientais</h1>
+        <!-- Logo carregada em Base64 -->
+        <img src="...logo_base64..." alt="Comércio das Índias Ocidentais" class="logo-header">
+        <h1>Comércio das Índias Ocidentais</h1>
         <p>Os produtos mais procurados e recomendados do mercado em um só lugar</p>
-
-        <!-- Barra de Busca Avançada -->
-        <div class="busca-container">
-            <input type="text" id="campo-busca" oninput="filtrarProdutos()" placeholder="🔍 O que você está procurando hoje?">
-        </div>
     </header>
 
     <div class="container">
-        
         <div id="painel-admin">
-            <h2 id="titulo-painel">Gerenciador de Vitrine (Exclusivo Administrador)</h2>
+            <h2>Gerenciador de Vitrine (Exclusivo Administrador)</h2>
             <button class="btn-logout" onclick="sairAdmin()">Sair do Painel</button>
             
             <div class="form-grupo">
-                <input type="hidden" id="id-edicao">
                 <input type="text" id="novo-nome" placeholder="Nome do Produto">
                 <input type="text" id="nova-categoria" placeholder="Categoria">
                 <input type="text" id="novo-link" placeholder="Link do produto (https://...)">
                 <input type="text" id="novo-img" placeholder="Link da imagem (opcional)">
-                <button id="btn-salvar" onclick="salvarProduto()">Adicionar</button>
+                <button onclick="adicionarProduto()">Adicionar</button>
             </div>
         </div>
 
-        <div class="grid-produtos" id="vitrine">
-            <!-- Injetado via JS -->
-        </div>
+        <div class="grid-produtos" id="vitrine"></div>
     </div>
 
     <script>
-        // Carrega os itens salvos no navegador ou inicia com dados base
-        let produtos = JSON.parse(localStorage.getItem('produtos_indias')) || [
+        // Cálculo de Hash SHA-256 para ocultar a senha no código
+        async function calcularHash(texto) {
+            const buffer = new TextEncoder().encode(texto);
+            const digest = await crypto.subtle.digest('SHA-256', buffer);
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Hash seguro da senha "1zaq2xsw3cde4vfr5bgt6nhy7"
+        const hashSenhaMestra = "2a829f046f00db1f8eeec2f58eeb0dc5a54db3ea0c6f5ef5c202022ea13f9f60";
+
+        let produtosPadrao = [
             { id: 1, nome: "Smartphone Premium 128GB", categoria: "Eletrônicos", link: "https://www.google.com", imagem: "" },
             { id: 2, nome: "Fone de Ouvido Bluetooth Noise Cancelling", categoria: "Acessórios", link: "https://www.google.com", imagem: "" },
             { id: 3, nome: "Smartwatch Esportivo À Prova D'água", categoria: "Vestíveis", link: "https://www.google.com", imagem: "" }
         ];
 
+        let produtos = JSON.parse(localStorage.getItem('indias_ocidentais_produtos')) || produtosPadrao;
         const vitrine = document.getElementById('vitrine');
-        const dropdownCats = document.getElementById('dropdown-cats');
-        const senhaMestra = "1zaq2xsw3cde4vfr5bgt6nhy7";
         let isAdminLogado = false;
-        let categoriaSelecionada = "Todas";
 
-        function atualizarArmazenamento() {
-            localStorage.setItem('produtos_indias', JSON.stringify(produtos));
-            renderizarMenuCategorias();
+        function salvarStorage() {
+            localStorage.setItem('indias_ocidentais_produtos', JSON.stringify(produtos));
         }
 
-        function renderizarMenuCategorias() {
-            const categoriasUnicas = ["Todas", ...new Set(produtos.map(p => p.categoria))];
-            dropdownCats.innerHTML = "";
-            categoriasUnicas.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.innerText = cat;
-                btn.onclick = () => {
-                    categoriaSelecionada = cat;
-                    filtrarProdutos();
-                    dropdownCats.style.display = 'none';
-                };
-                dropdownCats.appendChild(btn);
-            });
+        function escapeHtml(texto) {
+            if (!texto) return '';
+            return texto
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
 
-        function toggleAbasCategorias() {
-            dropdownCats.style.display = dropdownCats.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // Fecha as categorias se clicar fora delas
-        window.onclick = function(event) {
-            if (!event.target.matches('.btn-categorias-trigger')) {
-                dropdownCats.style.display = 'none';
-            }
-        }
-
-        function renderizarVitrine(listaProdutos = produtos) {
+        function renderizarVitrine() {
             vitrine.innerHTML = "";
-            
-            if (listaProdutos.length === 0) {
-                vitrine.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--texto-secundario); margin-top: 20px;">Nenhum produto encontrado.</p>`;
-                return;
-            }
-
-            listaProdutos.forEach(prod => {
+            produtos.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'card-produto';
                 
-                const exibicaoAdmin = isAdminLogado ? 'style="display: flex;"' : '';
-                const blocoImagem = prod.imagem 
-                    ? `<img src="${prod.imagem}" alt="${prod.nome}" class="img-produto" onerror="this.src=''; this.parentElement.innerHTML='<span class=\"img-placeholder\">Imagem indisponível</span>'">`
-                    : `<span class="img-placeholder">Imagem do Produto</span>`;
+                const estiloBotaoExcluir = isAdminLogado ? 'style="display: block;"' : '';
 
-                card.innerHTML = `
-                    <div class="acoes-admin-card" ${exibicaoAdmin}>
-                        <button class="btn-editar" onclick="carregarEdicao(${prod.id})">Editar</button>
-                        <button class="btn-excluir" onclick="excluirProduto(${prod.id})">Excluir</button>
-                    </div>
-                    <div>
-                        <div class="img-container">
-                            ${blocoImagem}
-                        </div>
-                        <div class="info-produto">
-                            <span class="tag-categoria">${prod.categoria}</span>
-                            <h3>${prod.nome}</h3>
-                        </div>
-                    </div>
-                    <a href="${prod.link}" target="_blank" class="btn-acesso">Ir para a Loja</a>
-                `;
+                const blocoImagem = prod.imagem 
+                    ? '<img src="' + escapeHtml(prod.imagem) + '" alt="' + escapeHtml(prod.nome) + '" class="img-produto" onerror="this.style.display=\'none\'">'
+                    : '<span class="img-placeholder">Imagem do Produto</span>';
+
+                card.innerHTML = 
+                    '<button class="btn-excluir" ' + estiloBotaoExcluir + ' onclick="excluirProduto(' + prod.id + ')">Excluir</button>' +
+                    '<div>' +
+                        '<div class="img-container">' + blocoImagem + '</div>' +
+                        '<div class="info-produto">' +
+                            '<span class="tag-categoria">' + escapeHtml(prod.categoria) + '</span>' +
+                            '<h3>' + escapeHtml(prod.nome) + '</h3>' +
+                        '</div>' +
+                    '</div>' +
+                    '<a href="' + escapeHtml(prod.link) + '" target="_blank" class="btn-acesso">Ir para a Loja</a>';
+                
                 vitrine.appendChild(card);
             });
         }
 
-        // Filtra os produtos usando tanto a barra de busca quanto a categoria selecionada
-        function filtrarProdutos() {
-            const termoBusca = document.getElementById('campo-busca').value.toLowerCase();
-            
-            const filtrados = produtos.filter(prod => {
-                const atendeFiltroCategoria = (categoriaSelecionada === "Todas" || prod.categoria === categoriaSelecionada);
-                const atendeFiltroBusca = prod.nome.toLowerCase().includes(termoBusca) || prod.categoria.toLowerCase().includes(termoBusca);
-                return atendeFiltroCategoria && atendeFiltroBusca;
-            });
-
-            renderizarVitrine(filtrados);
-        }
-
-        function autenticarAdmin() {
+        async function autenticarAdmin() {
             const entrada = prompt("Digite a senha de administrador:");
-            if (entrada === senhaMestra) {
+            if (!entrada) return;
+
+            const entradaHash = await calcularHash(entrada);
+
+            if (entradaHash === hashSenhaMestra) {
                 isAdminLogado = true;
                 document.getElementById('painel-admin').style.display = 'block';
                 document.getElementById('btn-trigger-topo').style.display = 'none';
                 renderizarVitrine();
-                alert("Painel de gerenciamento aberto!");
+                alert("Painel liberado!");
             } else {
-                alert("Acesso negado.");
+                alert("Acesso negado. Senha incorreta.");
             }
         }
 
@@ -512,14 +390,11 @@
             isAdminLogado = false;
             document.getElementById('painel-admin').style.display = 'none';
             document.getElementById('btn-trigger-topo').style.display = 'block';
-            limparFormulario();
             renderizarVitrine();
             alert("Você saiu da área do administrador.");
         }
 
-        // Combina adicionar novo e salvar edição em um só lugar
-        function salvarProduto() {
-            const idEdicao = document.getElementById('id-edicao').value;
+        function adicionarProduto() {
             const nome = document.getElementById('novo-nome').value;
             const categoria = document.getElementById('nova-categoria').value;
             const link = document.getElementById('novo-link').value;
@@ -530,68 +405,33 @@
                 return;
             }
 
-            if (idEdicao) {
-                // Modo Edição: Altera o item existente
-                const index = produtos.findIndex(p => p.id == idEdicao);
-                if (index !== -1) {
-                    produtos[index] = { id: parseInt(idEdicao), nome, categoria, link, imagem };
-                    alert("Produto atualizado com sucesso!");
-                }
-            } else {
-                // Modo Inserção: Cria um novo item
-                const novoItem = { id: Date.now(), nome, categoria, link, imagem };
-                produtos.unshift(novoItem);
-                alert("Produto adicionado à vitrine!");
-            }
+            const novoItem = {
+                id: Date.now(),
+                nome: nome,
+                categoria: categoria,
+                link: link,
+                imagem: imagem
+            };
 
-            atualizarArmazenamento();
-            filtrarProdutos();
-            limparFormulario();
-        }
+            produtos.unshift(novoItem);
+            salvarStorage();
+            renderizarVitrine();
 
-        // Puxa as informações do card de volta para os campos do painel
-        function carregarEdicao(idProduto) {
-            const prod = produtos.find(p => p.id === idProduto);
-            if (!prod) return;
-
-            document.getElementById('id-edicao').value = prod.id;
-            document.getElementById('novo-nome').value = prod.nome;
-            document.getElementById('nova-categoria').value = prod.categoria;
-            document.getElementById('novo-link').value = prod.link;
-            document.getElementById('novo-img').value = prod.imagem;
-
-            // Altera o visual do formulário para destacar a edição
-            document.getElementById('titulo-painel').innerText = "✏️ Editando Produto Selecionado";
-            document.getElementById('btn-salvar').innerText = "Salvar Alterações";
-            document.getElementById('btn-salvar').style.background = "var(--cor-edicao)";
-            
-            // Rola a página suavemente até o formulário de edição
-            document.getElementById('painel-admin').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function limparFormulario() {
-            document.getElementById('id-edicao').value = "";
             document.getElementById('novo-nome').value = "";
             document.getElementById('nova-categoria').value = "";
             document.getElementById('novo-link').value = "";
             document.getElementById('novo-img').value = "";
-
-            document.getElementById('titulo-painel').innerText = "Gerenciador de Vitrine (Exclusivo Administrador)";
-            document.getElementById('btn-salvar').innerText = "Adicionar";
-            document.getElementById('btn-salvar').style.background = "var(--cor-primaria)";
         }
 
         function excluirProduto(idProduto) {
-            if (confirm("Tem certeza de que deseja remover este produto definitivamente?")) {
+            if (confirm("Tem certeza de que deseja remover este produto da vitrine?")) {
                 produtos = produtos.filter(prod => prod.id !== idProduto);
-                atualizarArmazenamento();
-                filtrarProdutos();
+                salvarStorage();
+                renderizarVitrine();
             }
         }
 
-        // Inicialização da página
-        renderizarMenuCategorias();
         renderizarVitrine();
     </script>
 </body>
-</html>b
+</html>
