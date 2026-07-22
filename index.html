@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comércio das Índias Ocidentais - Hub de Revendas</title>
     <style>
+        /* === O CSS CONTINUA EXATAMENTE O MESMO === */
         :root {
             --bg-principal: #0b140e;
             --bg-card: #142419;
@@ -19,520 +20,99 @@
             --card-border: rgba(129, 199, 132, 0.15);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-principal);
-            color: var(--texto);
-            padding-bottom: 50px;
-        }
-
-        header {
-            background: var(--header-bg);
-            padding: 40px 20px 25px 20px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(46, 125, 50, 0.25);
-            position: relative;
-            border-bottom: 2px solid #388e3c;
-        }
-
-        /* Botão do Menu Hambúrguer (Três Barrinhas) */
-        .btn-menu {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            background: transparent;
-            border: none;
-            color: var(--cor-secundaria);
-            font-size: 1.8rem;
-            cursor: pointer;
-            z-index: 101;
-            transition: transform 0.2s;
-        }
-
-        .btn-menu:hover {
-            transform: scale(1.1);
-        }
-
-        /* Menu Lateral (Drawer) */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: var(--bg-card);
-            border-right: 2px solid var(--cor-secundaria);
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-            z-index: 200;
-            transition: left 0.3s ease;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 10px;
-        }
-
-        .sidebar-header h3 {
-            color: var(--cor-secundaria);
-        }
-
-        .btn-fechar-sidebar {
-            background: transparent;
-            border: none;
-            color: var(--cor-alerta);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .lista-categorias {
-            list-style: none;
-        }
-
-        .lista-categorias li {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            font-weight: 600;
-        }
-
-        .lista-categorias li:hover, .lista-categorias li.ativa {
-            background: var(--cor-secundaria);
-            color: var(--texto-escuro);
-        }
-
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 150;
-        }
-
-        .sidebar-overlay.active {
-            display: block;
-        }
-
-        .logo-header {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            height: 70px;
-            width: 70px;
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            object-fit: contain;
-            background: #0b140e;
-            border: 2px solid var(--cor-secundaria);
-        }
-
-        header h1 {
-            font-size: 2.7rem;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: #ffffff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            margin-top: 10px;
-        }
-
-        header p {
-            margin-top: 8px;
-            color: var(--cor-secundaria);
-            font-size: 1.1rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Container da Barra de Pesquisa */
-        .search-container {
-            max-width: 500px;
-            margin: 20px auto 0 auto;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: 2px solid var(--cor-secundaria);
-            background: rgba(11, 20, 14, 0.8);
-            color: #ffffff;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .search-input::placeholder {
-            color: var(--texto-secundario);
-            opacity: 0.8;
-        }
-
-        .search-input:focus {
-            background: #0b140e;
-            box-shadow: 0 0 12px rgba(129, 199, 132, 0.6);
-        }
-
-        .btn-admin-trigger {
-            position: absolute;
-            top: 18px;
-            left: 70px;
-            background: rgba(10, 18, 11, 0.4);
-            color: #ffffff;
-            border: 1px solid var(--cor-secundaria);
-            padding: 6px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .btn-admin-trigger:hover {
-            background: var(--cor-secundaria);
-            color: var(--texto-escuro);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* Modal de Login */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-box {
-            background: var(--bg-card);
-            border: 2px solid var(--cor-secundaria);
-            padding: 30px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-
-        .modal-box h3 {
-            margin-bottom: 15px;
-            color: var(--cor-secundaria);
-        }
-
-        .modal-box input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            border: 1px solid var(--cor-secundaria);
-            background: #0b140e;
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .modal-botoes {
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-botoes button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn-entrar {
-            background: var(--cor-secundaria);
-            color: var(--texto-escuro);
-        }
-
-        .btn-cancelar {
-            background: var(--cor-alerta);
-            color: white;
-        }
-
-        #painel-admin {
-            display: none;
-            background: var(--bg-card);
-            border: 2px dashed var(--cor-secundaria);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        #painel-admin h2 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--cor-secundaria);
-        }
-
-        .btn-logout {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background: transparent;
-            color: var(--cor-alerta);
-            border: 1px solid var(--cor-alerta);
-            padding: 6px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-
-        .btn-logout:hover {
-            background: var(--cor-alerta);
-            color: white;
-        }
-
-        .form-grupo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
-            gap: 15px;
-            align-items: end;
-        }
-
-        .form-grupo input {
-            background: #1c3323;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 10px;
-            border-radius: 6px;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        .form-grupo input:focus {
-            outline: none;
-            border-color: var(--cor-secundaria);
-        }
-
-        .form-grupo button {
-            background: var(--cor-secundaria);
-            color: var(--texto-escuro);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            height: 40px;
-            transition: background 0.2s;
-        }
-
-        .form-grupo button:hover {
-            background: #a5d6a7;
-        }
-
-        .btn-cancelar-edicao {
-            background: #555 !important;
-            color: white !important;
-            display: none;
-        }
-
-        .grid-produtos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-        }
-
-        .card-produto {
-            background-color: var(--bg-card);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--card-border);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        .card-produto:hover {
-            transform: translateY(-5px);
-            border-color: var(--cor-secundaria);
-            box-shadow: 0 10px 20px rgba(46, 125, 50, 0.2);
-        }
-
-        .acoes-admin-card {
-            display: none;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            gap: 5px;
-            z-index: 10;
-        }
-
-        .btn-card-admin {
-            border: none;
-            padding: 5px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        .btn-card-editar {
-            background: #ffb74d;
-            color: #000;
-        }
-
-        .btn-card-excluir {
-            background: var(--cor-alerta);
-            color: white;
-        }
-
-        .img-container {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(45deg, #1c3323, #142419);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .img-produto {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .img-placeholder {
-            color: var(--texto-secundario);
-            font-size: 0.9rem;
-        }
-
-        .info-produto {
-            padding: 15px;
-        }
-
-        .info-produto h3 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-            color: var(--texto);
-            height: 40px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-
-        .preco-produto {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--cor-secundaria);
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        .tag-categoria {
-            display: inline-block;
-            background: rgba(129, 199, 132, 0.15);
-            color: var(--cor-secundaria);
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .btn-acesso {
-            display: block;
-            width: 100%;
-            background: linear-gradient(90deg, #2e7d32, #388e3c);
-            color: #ffffff;
-            text-align: center;
-            padding: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: opacity 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-acesso:hover {
-            opacity: 0.9;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-principal); color: var(--texto); padding-bottom: 50px; }
+        header { background: var(--header-bg); padding: 40px 20px 25px 20px; text-align: center; box-shadow: 0 4px 20px rgba(46, 125, 50, 0.25); position: relative; border-bottom: 2px solid #388e3c; }
+        .btn-menu { position: absolute; top: 15px; left: 20px; background: transparent; border: none; color: var(--cor-secundaria); font-size: 1.8rem; cursor: pointer; z-index: 101; transition: transform 0.2s; }
+        .btn-menu:hover { transform: scale(1.1); }
+        .sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: var(--bg-card); border-right: 2px solid var(--cor-secundaria); box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5); z-index: 200; transition: left 0.3s ease; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar.active { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
+        .sidebar-header h3 { color: var(--cor-secundaria); }
+        .btn-fechar-sidebar { background: transparent; border: none; color: var(--cor-alerta); font-size: 1.5rem; cursor: pointer; }
+        .lista-categorias { list-style: none; }
+        .lista-categorias li { padding: 12px 15px; margin-bottom: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 6px; cursor: pointer; transition: background 0.2s, color 0.2s; font-weight: 600; }
+        .lista-categorias li:hover, .lista-categorias li.ativa { background: var(--cor-secundaria); color: var(--texto-escuro); }
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 150; }
+        .sidebar-overlay.active { display: block; }
+        .logo-header { position: absolute; top: 15px; right: 20px; height: 70px; width: 70px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); object-fit: contain; background: #0b140e; border: 2px solid var(--cor-secundaria); }
+        header h1 { font-size: 2.7rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #ffffff; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-top: 10px; }
+        header p { margin-top: 8px; color: var(--cor-secundaria); font-size: 1.1rem; font-weight: 600; opacity: 0.95; }
+        .search-container { max-width: 500px; margin: 20px auto 0 auto; position: relative; }
+        .search-input { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid var(--cor-secundaria); background: rgba(11, 20, 14, 0.8); color: #ffffff; font-size: 1rem; outline: none; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .search-input::placeholder { color: var(--texto-secundario); opacity: 0.8; }
+        .search-input:focus { background: #0b140e; box-shadow: 0 0 12px rgba(129, 199, 132, 0.6); }
+        .btn-admin-trigger { position: absolute; top: 18px; left: 70px; background: rgba(10, 18, 11, 0.4); color: #ffffff; border: 1px solid var(--cor-secundaria); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .btn-admin-trigger:hover { background: var(--cor-secundaria); color: var(--texto-escuro); }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-box { background: var(--bg-card); border: 2px solid var(--cor-secundaria); padding: 30px; border-radius: 12px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .modal-box h3 { margin-bottom: 15px; color: var(--cor-secundaria); }
+        .modal-box input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 6px; border: 1px solid var(--cor-secundaria); background: #0b140e; color: #fff; font-size: 1rem; }
+        .modal-botoes { display: flex; gap: 10px; }
+        .modal-botoes button { flex: 1; padding: 10px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-entrar { background: var(--cor-secundaria); color: var(--texto-escuro); }
+        .btn-cancelar { background: var(--cor-alerta); color: white; }
+        #painel-admin { display: none; background: var(--bg-card); border: 2px dashed var(--cor-secundaria); border-radius: 12px; padding: 25px; margin-bottom: 40px; position: relative; }
+        #painel-admin h2 { font-size: 1.3rem; margin-bottom: 15px; color: var(--cor-secundaria); }
+        .btn-logout { position: absolute; top: 20px; right: 25px; background: transparent; color: var(--cor-alerta); border: 1px solid var(--cor-alerta); padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.8rem; transition: all 0.2s; }
+        .btn-logout:hover { background: var(--cor-alerta); color: white; }
+        .form-grupo { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap: 15px; align-items: end; }
+        .form-grupo input { background: #1c3323; border: 1px solid rgba(255,255,255,0.15); padding: 10px; border-radius: 6px; color: white; font-size: 0.9rem; }
+        .form-grupo input:focus { outline: none; border-color: var(--cor-secundaria); }
+        .form-grupo button { background: var(--cor-secundaria); color: var(--texto-escuro); border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; height: 40px; transition: background 0.2s; }
+        .form-grupo button:hover { background: #a5d6a7; }
+        .btn-cancelar-edicao { background: #555 !important; color: white !important; display: none; }
+        .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        .card-produto { background-color: var(--bg-card); border-radius: 12px; overflow: hidden; border: 1px solid var(--card-border); transition: transform 0.3s ease, border-color 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .card-produto:hover { transform: translateY(-5px); border-color: var(--cor-secundaria); box-shadow: 0 10px 20px rgba(46, 125, 50, 0.2); }
+        .acoes-admin-card { display: none; position: absolute; top: 10px; right: 10px; gap: 5px; z-index: 10; }
+        .btn-card-admin { border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .btn-card-editar { background: #ffb74d; color: #000; }
+        .btn-card-excluir { background: var(--cor-alerta); color: white; }
+        .img-container { width: 100%; height: 180px; background: linear-gradient(45deg, #1c3323, #142419); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .img-produto { width: 100%; height: 100%; object-fit: cover; }
+        .img-placeholder { color: var(--texto-secundario); font-size: 0.9rem; }
+        .info-produto { padding: 15px; }
+        .info-produto h3 { font-size: 1rem; margin-bottom: 8px; color: var(--texto); height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .preco-produto { font-size: 1.25rem; font-weight: 800; color: var(--cor-secundaria); margin-top: 5px; margin-bottom: 5px; }
+        .tag-categoria { display: inline-block; background: rgba(129, 199, 132, 0.15); color: var(--cor-secundaria); font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; margin-bottom: 8px; font-weight: 600; }
+        .btn-acesso { display: block; width: 100%; background: linear-gradient(90deg, #2e7d32, #388e3c); color: #ffffff; text-align: center; padding: 12px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: opacity 0.2s; border: none; cursor: pointer; }
+        .btn-acesso:hover { opacity: 0.9; }
+        #loading-msg { text-align: center; color: var(--cor-secundaria); font-size: 1.2rem; grid-column: 1/-1; padding: 40px; }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Botão das Três Barrinhas -->
-        <button class="btn-menu" onclick="toggleSidebar()" title="Categorias">☰</button>
-
-        <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="abrirModal()">Área do Admin</button>
-        
+        <button class="btn-menu" onclick="window.toggleSidebar()" title="Categorias">☰</button>
+        <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="window.abrirModal()">Área do Admin</button>
         <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23142419' stroke='%2381c784' stroke-width='4'/><path d='M30 65 Q 50 75 70 65 L 65 72 Q 50 82 35 72 Z' fill='%2381c784'/><path d='M50 20 L 50 65' stroke='%2381c784' stroke-width='4'/><path d='M50 22 Q 70 55 50 63 Z' fill='%232e7d32'/></svg>" alt="Comércio das Índias Ocidentais" class="logo-header">
         
         <h1>Comércio das Índias Ocidentais</h1>
-        <p>Os produtos mais procurados e recomendados do Agro em um só lugar</p>
+        <p>Os produtos mais procurados e recomendados do mercado em um só lugar</p>
 
-        <!-- Barra de Pesquisa abaixo do Slogan -->
         <div class="search-container">
-            <input type="text" id="campo-busca" class="search-input" placeholder="🔍 O que você está procurando hoje?" oninput="filtrarPorBusca()">
+            <input type="text" id="campo-busca" class="search-input" placeholder="🔍 O que você está procurando hoje?" oninput="window.filtrarPorBusca()">
         </div>
     </header>
 
-    <!-- Menu Lateral de Categorias -->
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="window.toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h3>Categorias</h3>
-            <button class="btn-fechar-sidebar" onclick="toggleSidebar()">✕</button>
+            <button class="btn-fechar-sidebar" onclick="window.toggleSidebar()">✕</button>
         </div>
-        <ul class="lista-categorias" id="lista-categorias">
-            <!-- Gerado Dinamicamente -->
-        </ul>
+        <ul class="lista-categorias" id="lista-categorias"></ul>
     </div>
 
-    <!-- Modal de Login -->
     <div class="modal-overlay" id="modal-login">
         <div class="modal-box">
             <h3>Login Administrador</h3>
             <input type="password" id="senha-input" placeholder="Digite a senha de acesso">
             <div class="modal-botoes">
-                <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
-                <button class="btn-entrar" onclick="validarSenha()">Entrar</button>
+                <button class="btn-cancelar" onclick="window.fecharModal()">Cancelar</button>
+                <button class="btn-entrar" onclick="window.validarSenha()">Entrar</button>
             </div>
         </div>
     </div>
@@ -540,7 +120,7 @@
     <div class="container">
         <div id="painel-admin">
             <h2 id="titulo-form">Adicionar Novo Produto</h2>
-            <button class="btn-logout" onclick="sairAdmin()">Sair do Painel</button>
+            <button class="btn-logout" onclick="window.sairAdmin()">Sair do Painel</button>
             
             <div class="form-grupo">
                 <input type="text" id="novo-nome" placeholder="Nome do Produto">
@@ -548,53 +128,144 @@
                 <input type="number" step="0.01" id="novo-preco" placeholder="Preço (ex: 199.90)">
                 <input type="text" id="novo-link" placeholder="Link do produto (https://...)">
                 <input type="text" id="novo-img" placeholder="Link da imagem (opcional)">
-                <button id="btn-salvar-prod" onclick="salvarProduto()">Adicionar</button>
-                <button id="btn-cancelar-edicao" class="btn-cancelar-edicao" onclick="limparFormulario()">Cancelar</button>
+                <button id="btn-salvar-prod" onclick="window.salvarProduto()">Adicionar</button>
+                <button id="btn-cancelar-edicao" class="btn-cancelar-edicao" onclick="window.limparFormulario()">Cancelar</button>
             </div>
         </div>
 
-        <div class="grid-produtos" id="vitrine"></div>
+        <div class="grid-produtos" id="vitrine">
+            <div id="loading-msg">Carregando produtos... Aguarde.</div>
+        </div>
     </div>
 
-    <script>
+    <!-- SCRIPT TIPO MODULE PARA O FIREBASE -->
+    <script type="module">
+        // Importando o Firebase (Versão Modular v10) direto pelo navegador
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // =========================================================
+        // ATENÇÃO: COLOQUE AS SUAS CREDENCIAIS DO FIREBASE AQUI
+        // =========================================================
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            projectId: "SEU_PROJETO",
+            storageBucket: "SEU_PROJETO.appspot.com",
+            messagingSenderId: "SEU_SENDER_ID",
+            appId: "SEU_APP_ID"
+        };
+
+        // Inicializando Banco de Dados
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Variáveis de Controle
         const SENHA_ADMIN = "1zaq2xsw3cde4vfr5bgt6nhy7";
-
-        let produtosPadrao = [
-            { id: 1, nome: "Smartphone Premium 128GB", categoria: "Eletrônicos", preco: 1299.90, link: "https://www.google.com", imagem: "" },
-            { id: 2, nome: "Fone de Ouvido Bluetooth Noise Cancelling", categoria: "Acessórios", preco: 249.00, link: "https://www.google.com", imagem: "" },
-            { id: 3, nome: "Smartwatch Esportivo À Prova D'água", categoria: "Vestíveis", preco: 189.50, link: "https://www.google.com", imagem: "" }
-        ];
-
-        let produtos = JSON.parse(localStorage.getItem('indias_ocidentais_produtos')) || produtosPadrao;
+        let produtos = [];
         const vitrine = document.getElementById('vitrine');
         let isAdminLogado = false;
-        let idEditando = null;
+        let idEditando = null; // Agora vai guardar o ID do Firestore (string)
         let categoriaAtiva = "Todas";
         let termoBusca = "";
 
-        function salvarStorage() {
-            localStorage.setItem('indias_ocidentais_produtos', JSON.stringify(produtos));
+        // =========================================================
+        // FUNÇÕES DO BANCO DE DADOS (FIREBASE)
+        // =========================================================
+        
+        // Carregar produtos da nuvem
+        async function carregarProdutos() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "produtos"));
+                produtos = []; // Limpa array local
+                querySnapshot.forEach((doc) => {
+                    produtos.push({ id: doc.id, ...doc.data() });
+                });
+                window.renderizarCategorias();
+                window.renderizarVitrine();
+            } catch (erro) {
+                console.error("Erro ao carregar produtos:", erro);
+                vitrine.innerHTML = "<p style='color:red;'>Erro ao conectar com o banco de dados. Verifique suas credenciais.</p>";
+            }
         }
+
+        // Adicionar ou Atualizar
+        window.salvarProduto = async function() {
+            const nome = document.getElementById('novo-nome').value.trim();
+            const categoria = document.getElementById('nova-categoria').value.trim();
+            const preco = document.getElementById('novo-preco').value;
+            const link = document.getElementById('novo-link').value.trim();
+            const imagem = document.getElementById('novo-img').value.trim();
+
+            if (!nome || !categoria || !link) {
+                alert("Preencha os campos obrigatórios (Nome, Categoria e Link).");
+                return;
+            }
+
+            const dadosProduto = {
+                nome,
+                categoria,
+                preco: preco ? parseFloat(preco) : null,
+                link,
+                imagem,
+                dataCriacao: Date.now() // Ajuda a ordenar depois
+            };
+
+            const btnSalvar = document.getElementById('btn-salvar-prod');
+            btnSalvar.textContent = "Salvando...";
+            btnSalvar.disabled = true;
+
+            try {
+                if (idEditando) {
+                    // Atualiza no Firebase
+                    const docRef = doc(db, "produtos", idEditando);
+                    await updateDoc(docRef, dadosProduto);
+                } else {
+                    // Cria novo no Firebase
+                    await addDoc(collection(db, "produtos"), dadosProduto);
+                }
+                
+                await carregarProdutos(); // Recarrega a lista do banco
+                window.limparFormulario();
+            } catch (erro) {
+                console.error("Erro ao salvar:", erro);
+                alert("Erro ao salvar produto. Verifique as permissões do Firebase.");
+            } finally {
+                btnSalvar.textContent = "Adicionar";
+                btnSalvar.disabled = false;
+            }
+        }
+
+        // Excluir
+        window.excluirProduto = async function(idProduto) {
+            if (confirm("Tem certeza de que deseja remover este produto da vitrine?")) {
+                try {
+                    await deleteDoc(doc(db, "produtos", idProduto));
+                    await carregarProdutos(); // Atualiza a tela
+                } catch (erro) {
+                    console.error("Erro ao excluir:", erro);
+                    alert("Erro ao excluir.");
+                }
+            }
+        }
+
+        // =========================================================
+        // FUNÇÕES DE INTERFACE (UI)
+        // =========================================================
 
         function escapeHtml(texto) {
             if (!texto) return '';
-            return String(texto)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+            return String(texto).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        function toggleSidebar() {
+        window.toggleSidebar = function() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('sidebar-overlay').classList.toggle('active');
         }
 
-        function renderizarCategorias() {
+        window.renderizarCategorias = function() {
             const ul = document.getElementById('lista-categorias');
             ul.innerHTML = '';
-
             const categoriasUnicas = ["Todas", ...new Set(produtos.map(p => p.categoria.trim()))];
 
             categoriasUnicas.forEach(cat => {
@@ -604,22 +275,21 @@
                 
                 li.onclick = () => {
                     categoriaAtiva = cat;
-                    renderizarCategorias();
-                    renderizarVitrine();
-                    toggleSidebar();
+                    window.renderizarCategorias();
+                    window.renderizarVitrine();
+                    window.toggleSidebar();
                 };
                 ul.appendChild(li);
             });
         }
 
-        function filtrarPorBusca() {
+        window.filtrarPorBusca = function() {
             termoBusca = document.getElementById('campo-busca').value.toLowerCase().trim();
-            renderizarVitrine();
+            window.renderizarVitrine();
         }
 
-        function renderizarVitrine() {
+        window.renderizarVitrine = function() {
             vitrine.innerHTML = "";
-
             const produtosFiltrados = produtos.filter(prod => {
                 const bateuCategoria = categoriaAtiva === "Todas" || prod.categoria.trim().toLowerCase() === categoriaAtiva.toLowerCase();
                 const bateuBusca = prod.nome.toLowerCase().includes(termoBusca) || prod.categoria.toLowerCase().includes(termoBusca);
@@ -634,155 +304,81 @@
             produtosFiltrados.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'card-produto';
-                
                 const estiloAdminDisplay = isAdminLogado ? 'style="display: flex;"' : '';
-
                 const blocoImagem = prod.imagem 
                     ? '<img src="' + escapeHtml(prod.imagem) + '" alt="' + escapeHtml(prod.nome) + '" class="img-produto" onerror="this.style.display=\'none\'">'
-                    : '<span class="img-placeholder">Imagem do Produto</span>';
-
+                    : '<span class="img-placeholder">Sem Imagem</span>';
                 const valorFormatado = prod.preco 
                     ? parseFloat(prod.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
                     : 'Consulte o valor';
 
+                // Como o ID do Firebase é texto (string), precisamos colocar entre aspas simples na função
                 card.innerHTML = 
-                    '<div class="acoes-admin-card" ' + estiloAdminDisplay + '>' +
-                        '<button class="btn-card-admin btn-card-editar" onclick="prepararEdicao(' + prod.id + ')">Editar</button>' +
-                        '<button class="btn-card-admin btn-card-excluir" onclick="excluirProduto(' + prod.id + ')">Excluir</button>' +
-                    '</div>' +
-                    '<div>' +
-                        '<div class="img-container">' + blocoImagem + '</div>' +
-                        '<div class="info-produto">' +
-                            '<span class="tag-categoria">' + escapeHtml(prod.categoria) + '</span>' +
-                            '<h3>' + escapeHtml(prod.nome) + '</h3>' +
-                            '<div class="preco-produto">' + valorFormatado + '</div>' +
-                        '</div>' +
-                    '</div>' +
-                    '<a href="' + escapeHtml(prod.link) + '" target="_blank" class="btn-acesso">Ir para a Loja</a>';
+                    `<div class="acoes-admin-card" ${estiloAdminDisplay}>
+                        <button class="btn-card-admin btn-card-editar" onclick="window.prepararEdicao('${prod.id}')">Editar</button>
+                        <button class="btn-card-admin btn-card-excluir" onclick="window.excluirProduto('${prod.id}')">Excluir</button>
+                    </div>
+                    <div>
+                        <div class="img-container">${blocoImagem}</div>
+                        <div class="info-produto">
+                            <span class="tag-categoria">${escapeHtml(prod.categoria)}</span>
+                            <h3>${escapeHtml(prod.nome)}</h3>
+                            <div class="preco-produto">${valorFormatado}</div>
+                        </div>
+                    </div>
+                    <a href="${escapeHtml(prod.link)}" target="_blank" class="btn-acesso">Ir para a Loja</a>`;
                 
                 vitrine.appendChild(card);
             });
         }
 
-        function abrirModal() {
-            document.getElementById('modal-login').style.display = 'flex';
-            document.getElementById('senha-input').focus();
-        }
-
-        function fecharModal() {
-            document.getElementById('modal-login').style.display = 'none';
-            document.getElementById('senha-input').value = '';
-        }
-
-        function validarSenha() {
-            const senhaDigitada = document.getElementById('senha-input').value.trim();
-            
-            if (senhaDigitada === SENHA_ADMIN) {
+        window.abrirModal = function() { document.getElementById('modal-login').style.display = 'flex'; document.getElementById('senha-input').focus(); }
+        window.fecharModal = function() { document.getElementById('modal-login').style.display = 'none'; document.getElementById('senha-input').value = ''; }
+        
+        window.validarSenha = function() {
+            if (document.getElementById('senha-input').value.trim() === SENHA_ADMIN) {
                 isAdminLogado = true;
                 document.getElementById('painel-admin').style.display = 'block';
                 document.getElementById('btn-trigger-topo').style.display = 'none';
-                fecharModal();
-                renderizarVitrine();
-            } else {
-                alert("Acesso negado. Senha incorreta.");
-            }
+                window.fecharModal();
+                window.renderizarVitrine();
+            } else { alert("Acesso negado. Senha incorreta."); }
         }
 
-        function sairAdmin() {
+        window.sairAdmin = function() {
             isAdminLogado = false;
-            limparFormulario();
+            window.limparFormulario();
             document.getElementById('painel-admin').style.display = 'none';
             document.getElementById('btn-trigger-topo').style.display = 'block';
-            renderizarVitrine();
+            window.renderizarVitrine();
         }
 
-        function salvarProduto() {
-            const nome = document.getElementById('novo-nome').value.trim();
-            const categoria = document.getElementById('nova-categoria').value.trim();
-            const preco = document.getElementById('novo-preco').value;
-            const link = document.getElementById('novo-link').value.trim();
-            const imagem = document.getElementById('novo-img').value.trim();
-
-            if (!nome || !categoria || !link) {
-                alert("Preencha os campos obrigatórios (Nome, Categoria e Link).");
-                return;
-            }
-
-            if (idEditando !== null) {
-                // Modo Edição
-                const index = produtos.findIndex(p => p.id === idEditando);
-                if (index !== -1) {
-                    produtos[index] = {
-                        ...produtos[index],
-                        nome,
-                        categoria,
-                        preco: preco ? parseFloat(preco) : null,
-                        link,
-                        imagem
-                    };
-                }
-            } else {
-                // Modo Adição
-                const novoItem = {
-                    id: Date.now(),
-                    nome,
-                    categoria,
-                    preco: preco ? parseFloat(preco) : null,
-                    link,
-                    imagem
-                };
-                produtos.unshift(novoItem);
-            }
-
-            salvarStorage();
-            renderizarCategorias();
-            renderizarVitrine();
-            limparFormulario();
-        }
-
-        function prepararEdicao(id) {
+        window.prepararEdicao = function(id) {
             const prod = produtos.find(p => p.id === id);
             if (!prod) return;
-
             idEditando = id;
             document.getElementById('novo-nome').value = prod.nome;
             document.getElementById('nova-categoria').value = prod.categoria;
             document.getElementById('novo-preco').value = prod.preco || '';
             document.getElementById('novo-link').value = prod.link;
             document.getElementById('novo-img').value = prod.imagem || '';
-
             document.getElementById('titulo-form').textContent = "Editar Produto";
             document.getElementById('btn-salvar-prod').textContent = "Atualizar";
             document.getElementById('btn-cancelar-edicao').style.display = "inline-block";
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function limparFormulario() {
+        window.limparFormulario = function() {
             idEditando = null;
-            document.getElementById('novo-nome').value = "";
-            document.getElementById('nova-categoria').value = "";
-            document.getElementById('novo-preco').value = "";
-            document.getElementById('novo-link').value = "";
-            document.getElementById('novo-img').value = "";
-
+            document.getElementById('novo-nome').value = ""; document.getElementById('nova-categoria').value = "";
+            document.getElementById('novo-preco').value = ""; document.getElementById('novo-link').value = ""; document.getElementById('novo-img').value = "";
             document.getElementById('titulo-form').textContent = "Adicionar Novo Produto";
             document.getElementById('btn-salvar-prod').textContent = "Adicionar";
             document.getElementById('btn-cancelar-edicao').style.display = "none";
         }
 
-        function excluirProduto(idProduto) {
-            if (confirm("Tem certeza de que deseja remover este produto da vitrine?")) {
-                produtos = produtos.filter(prod => prod.id !== idProduto);
-                salvarStorage();
-                renderizarCategorias();
-                renderizarVitrine();
-            }
-        }
-
-        // Inicialização
-        renderizarCategorias();
-        renderizarVitrine();
+        // Inicia o sistema chamando o Banco de Dados
+        carregarProdutos();
     </script>
 </body>
 </html>
