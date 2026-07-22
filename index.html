@@ -34,7 +34,7 @@
 
         header {
             background: var(--header-bg);
-            padding: 40px 20px;
+            padding: 40px 20px 25px 20px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(46, 125, 50, 0.25);
             position: relative;
@@ -159,11 +159,41 @@
         }
 
         header p {
-            margin-top: 10px;
+            margin-top: 8px;
             color: var(--cor-secundaria);
             font-size: 1.1rem;
             font-weight: 600;
             opacity: 0.95;
+        }
+
+        /* Container da Barra de Pesquisa */
+        .search-container {
+            max-width: 500px;
+            margin: 20px auto 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--cor-secundaria);
+            background: rgba(11, 20, 14, 0.8);
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .search-input::placeholder {
+            color: var(--texto-secundario);
+            opacity: 0.8;
+        }
+
+        .search-input:focus {
+            background: #0b140e;
+            box-shadow: 0 0 12px rgba(129, 199, 132, 0.6);
         }
 
         .btn-admin-trigger {
@@ -472,10 +502,15 @@
 
         <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="abrirModal()">Área do Admin</button>
         
-        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23142419' stroke='%2381c784' stroke-width='4'/><path d='M30 65 Q 50 75 70 65 L 65 72 Q 50 82 35 72 Z' fill='%2381c784'/><path d='M50 20 L 50 65' stroke='%2381c784' stroke-width='4'/><path d='M50 22 Q 75 32 50 45 Q 70 55 50 63 Z' fill='%232e7d32'/></svg>" alt="Comércio das Índias Ocidentais" class="logo-header">
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23142419' stroke='%2381c784' stroke-width='4'/><path d='M30 65 Q 50 75 70 65 L 65 72 Q 50 82 35 72 Z' fill='%2381c784'/><path d='M50 20 L 50 65' stroke='%2381c784' stroke-width='4'/><path d='M50 22 Q 70 55 50 63 Z' fill='%232e7d32'/></svg>" alt="Comércio das Índias Ocidentais" class="logo-header">
         
         <h1>Comércio das Índias Ocidentais</h1>
         <p>Os produtos mais procurados e recomendados do mercado em um só lugar</p>
+
+        <!-- Barra de Pesquisa abaixo do Slogan -->
+        <div class="search-container">
+            <input type="text" id="campo-busca" class="search-input" placeholder="🔍 O que você está procurando hoje?" oninput="filtrarPorBusca()">
+        </div>
     </header>
 
     <!-- Menu Lateral de Categorias -->
@@ -535,6 +570,7 @@
         let isAdminLogado = false;
         let idEditando = null;
         let categoriaAtiva = "Todas";
+        let termoBusca = "";
 
         function salvarStorage() {
             localStorage.setItem('indias_ocidentais_produtos', JSON.stringify(produtos));
@@ -576,15 +612,22 @@
             });
         }
 
+        function filtrarPorBusca() {
+            termoBusca = document.getElementById('campo-busca').value.toLowerCase().trim();
+            renderizarVitrine();
+        }
+
         function renderizarVitrine() {
             vitrine.innerHTML = "";
 
-            const produtosFiltrados = categoriaAtiva === "Todas" 
-                ? produtos 
-                : produtos.filter(p => p.categoria.trim().toLowerCase() === categoriaAtiva.toLowerCase());
+            const produtosFiltrados = produtos.filter(prod => {
+                const bateuCategoria = categoriaAtiva === "Todas" || prod.categoria.trim().toLowerCase() === categoriaAtiva.toLowerCase();
+                const bateuBusca = prod.nome.toLowerCase().includes(termoBusca) || prod.categoria.toLowerCase().includes(termoBusca);
+                return bateuCategoria && bateuBusca;
+            });
 
             if (produtosFiltrados.length === 0) {
-                vitrine.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Nenhum produto encontrado nesta categoria.</p>";
+                vitrine.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: var(--texto-secundario); padding: 20px;'>Nenhum produto encontrado.</p>";
                 return;
             }
 
