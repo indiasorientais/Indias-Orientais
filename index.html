@@ -41,6 +41,100 @@
             border-bottom: 2px solid #388e3c;
         }
 
+        /* Botão do Menu Hambúrguer (Três Barrinhas) */
+        .btn-menu {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: transparent;
+            border: none;
+            color: var(--cor-secundaria);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 101;
+            transition: transform 0.2s;
+        }
+
+        .btn-menu:hover {
+            transform: scale(1.1);
+        }
+
+        /* Menu Lateral (Drawer) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-card);
+            border-right: 2px solid var(--cor-secundaria);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            transition: left 0.3s ease;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+        }
+
+        .sidebar-header h3 {
+            color: var(--cor-secundaria);
+        }
+
+        .btn-fechar-sidebar {
+            background: transparent;
+            border: none;
+            color: var(--cor-alerta);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .lista-categorias {
+            list-style: none;
+        }
+
+        .lista-categorias li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            font-weight: 600;
+        }
+
+        .lista-categorias li:hover, .lista-categorias li.ativa {
+            background: var(--cor-secundaria);
+            color: var(--texto-escuro);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 150;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
         .logo-header {
             position: absolute;
             top: 15px;
@@ -61,6 +155,7 @@
             text-transform: uppercase;
             color: #ffffff;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            margin-top: 10px;
         }
 
         header p {
@@ -73,12 +168,12 @@
 
         .btn-admin-trigger {
             position: absolute;
-            top: 15px;
-            left: 20px;
+            top: 18px;
+            left: 70px;
             background: rgba(10, 18, 11, 0.4);
             color: #ffffff;
             border: 1px solid var(--cor-secundaria);
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.85rem;
@@ -200,7 +295,7 @@
 
         .form-grupo {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
             gap: 15px;
             align-items: end;
         }
@@ -235,6 +330,12 @@
             background: #a5d6a7;
         }
 
+        .btn-cancelar-edicao {
+            background: #555 !important;
+            color: white !important;
+            display: none;
+        }
+
         .grid-produtos {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -259,25 +360,33 @@
             box-shadow: 0 10px 20px rgba(46, 125, 50, 0.2);
         }
 
-        .btn-excluir {
+        .acoes-admin-card {
             display: none;
             position: absolute;
             top: 10px;
             right: 10px;
-            background: var(--cor-alerta);
-            color: white;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .btn-card-admin {
             border: none;
-            padding: 5px 10px;
+            padding: 5px 8px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: bold;
-            z-index: 10;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        .btn-excluir:hover {
-            background: #c62828;
+        .btn-card-editar {
+            background: #ffb74d;
+            color: #000;
+        }
+
+        .btn-card-excluir {
+            background: var(--cor-alerta);
+            color: white;
         }
 
         .img-container {
@@ -316,6 +425,14 @@
             -webkit-box-orient: vertical;
         }
 
+        .preco-produto {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--cor-secundaria);
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
         .tag-categoria {
             display: inline-block;
             background: rgba(129, 199, 132, 0.15);
@@ -323,7 +440,7 @@
             font-size: 0.75rem;
             padding: 3px 8px;
             border-radius: 4px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
         }
 
@@ -350,14 +467,28 @@
 <body>
 
     <header>
-        <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="abrirModal()">Área do Administrador</button>
+        <!-- Botão das Três Barrinhas -->
+        <button class="btn-menu" onclick="toggleSidebar()" title="Categorias">☰</button>
+
+        <button class="btn-admin-trigger" id="btn-trigger-topo" onclick="abrirModal()">Área do Admin</button>
         
-        <!-- Logo SVG no canto superior direito -->
         <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23142419' stroke='%2381c784' stroke-width='4'/><path d='M30 65 Q 50 75 70 65 L 65 72 Q 50 82 35 72 Z' fill='%2381c784'/><path d='M50 20 L 50 65' stroke='%2381c784' stroke-width='4'/><path d='M50 22 Q 75 32 50 45 Q 70 55 50 63 Z' fill='%232e7d32'/></svg>" alt="Comércio das Índias Ocidentais" class="logo-header">
         
         <h1>Comércio das Índias Ocidentais</h1>
         <p>Os produtos mais procurados e recomendados do mercado em um só lugar</p>
     </header>
+
+    <!-- Menu Lateral de Categorias -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Categorias</h3>
+            <button class="btn-fechar-sidebar" onclick="toggleSidebar()">✕</button>
+        </div>
+        <ul class="lista-categorias" id="lista-categorias">
+            <!-- Gerado Dinamicamente -->
+        </ul>
+    </div>
 
     <!-- Modal de Login -->
     <div class="modal-overlay" id="modal-login">
@@ -373,15 +504,17 @@
 
     <div class="container">
         <div id="painel-admin">
-            <h2>Gerenciador de Vitrine (Exclusivo Administrador)</h2>
+            <h2 id="titulo-form">Adicionar Novo Produto</h2>
             <button class="btn-logout" onclick="sairAdmin()">Sair do Painel</button>
             
             <div class="form-grupo">
                 <input type="text" id="novo-nome" placeholder="Nome do Produto">
                 <input type="text" id="nova-categoria" placeholder="Categoria">
+                <input type="number" step="0.01" id="novo-preco" placeholder="Preço (ex: 199.90)">
                 <input type="text" id="novo-link" placeholder="Link do produto (https://...)">
                 <input type="text" id="novo-img" placeholder="Link da imagem (opcional)">
-                <button onclick="adicionarProduto()">Adicionar</button>
+                <button id="btn-salvar-prod" onclick="salvarProduto()">Adicionar</button>
+                <button id="btn-cancelar-edicao" class="btn-cancelar-edicao" onclick="limparFormulario()">Cancelar</button>
             </div>
         </div>
 
@@ -392,14 +525,16 @@
         const SENHA_ADMIN = "1zaq2xsw3cde4vfr5bgt6nhy7";
 
         let produtosPadrao = [
-            { id: 1, nome: "Smartphone Premium 128GB", categoria: "Eletrônicos", link: "https://www.google.com", imagem: "" },
-            { id: 2, nome: "Fone de Ouvido Bluetooth Noise Cancelling", categoria: "Acessórios", link: "https://www.google.com", imagem: "" },
-            { id: 3, nome: "Smartwatch Esportivo À Prova D'água", categoria: "Vestíveis", link: "https://www.google.com", imagem: "" }
+            { id: 1, nome: "Smartphone Premium 128GB", categoria: "Eletrônicos", preco: 1299.90, link: "https://www.google.com", imagem: "" },
+            { id: 2, nome: "Fone de Ouvido Bluetooth Noise Cancelling", categoria: "Acessórios", preco: 249.00, link: "https://www.google.com", imagem: "" },
+            { id: 3, nome: "Smartwatch Esportivo À Prova D'água", categoria: "Vestíveis", preco: 189.50, link: "https://www.google.com", imagem: "" }
         ];
 
         let produtos = JSON.parse(localStorage.getItem('indias_ocidentais_produtos')) || produtosPadrao;
         const vitrine = document.getElementById('vitrine');
         let isAdminLogado = false;
+        let idEditando = null;
+        let categoriaAtiva = "Todas";
 
         function salvarStorage() {
             localStorage.setItem('indias_ocidentais_produtos', JSON.stringify(produtos));
@@ -407,7 +542,7 @@
 
         function escapeHtml(texto) {
             if (!texto) return '';
-            return texto
+            return String(texto)
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
@@ -415,25 +550,69 @@
                 .replace(/'/g, "&#039;");
         }
 
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
+        }
+
+        function renderizarCategorias() {
+            const ul = document.getElementById('lista-categorias');
+            ul.innerHTML = '';
+
+            const categoriasUnicas = ["Todas", ...new Set(produtos.map(p => p.categoria.trim()))];
+
+            categoriasUnicas.forEach(cat => {
+                const li = document.createElement('li');
+                li.textContent = cat;
+                if (cat === categoriaAtiva) li.className = 'ativa';
+                
+                li.onclick = () => {
+                    categoriaAtiva = cat;
+                    renderizarCategorias();
+                    renderizarVitrine();
+                    toggleSidebar();
+                };
+                ul.appendChild(li);
+            });
+        }
+
         function renderizarVitrine() {
             vitrine.innerHTML = "";
-            produtos.forEach(prod => {
+
+            const produtosFiltrados = categoriaAtiva === "Todas" 
+                ? produtos 
+                : produtos.filter(p => p.categoria.trim().toLowerCase() === categoriaAtiva.toLowerCase());
+
+            if (produtosFiltrados.length === 0) {
+                vitrine.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>Nenhum produto encontrado nesta categoria.</p>";
+                return;
+            }
+
+            produtosFiltrados.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'card-produto';
                 
-                const estiloBotaoExcluir = isAdminLogado ? 'style="display: block;"' : '';
+                const estiloAdminDisplay = isAdminLogado ? 'style="display: flex;"' : '';
 
                 const blocoImagem = prod.imagem 
                     ? '<img src="' + escapeHtml(prod.imagem) + '" alt="' + escapeHtml(prod.nome) + '" class="img-produto" onerror="this.style.display=\'none\'">'
                     : '<span class="img-placeholder">Imagem do Produto</span>';
 
+                const valorFormatado = prod.preco 
+                    ? parseFloat(prod.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                    : 'Consulte o valor';
+
                 card.innerHTML = 
-                    '<button class="btn-excluir" ' + estiloBotaoExcluir + ' onclick="excluirProduto(' + prod.id + ')">Excluir</button>' +
+                    '<div class="acoes-admin-card" ' + estiloAdminDisplay + '>' +
+                        '<button class="btn-card-admin btn-card-editar" onclick="prepararEdicao(' + prod.id + ')">Editar</button>' +
+                        '<button class="btn-card-admin btn-card-excluir" onclick="excluirProduto(' + prod.id + ')">Excluir</button>' +
+                    '</div>' +
                     '<div>' +
                         '<div class="img-container">' + blocoImagem + '</div>' +
                         '<div class="info-produto">' +
                             '<span class="tag-categoria">' + escapeHtml(prod.categoria) + '</span>' +
                             '<h3>' + escapeHtml(prod.nome) + '</h3>' +
+                            '<div class="preco-produto">' + valorFormatado + '</div>' +
                         '</div>' +
                     '</div>' +
                     '<a href="' + escapeHtml(prod.link) + '" target="_blank" class="btn-acesso">Ir para a Loja</a>';
@@ -468,48 +647,98 @@
 
         function sairAdmin() {
             isAdminLogado = false;
+            limparFormulario();
             document.getElementById('painel-admin').style.display = 'none';
             document.getElementById('btn-trigger-topo').style.display = 'block';
             renderizarVitrine();
         }
 
-        function adicionarProduto() {
-            const nome = document.getElementById('novo-nome').value;
-            const categoria = document.getElementById('nova-categoria').value;
-            const link = document.getElementById('novo-link').value;
-            const imagem = document.getElementById('novo-img').value;
+        function salvarProduto() {
+            const nome = document.getElementById('novo-nome').value.trim();
+            const categoria = document.getElementById('nova-categoria').value.trim();
+            const preco = document.getElementById('novo-preco').value;
+            const link = document.getElementById('novo-link').value.trim();
+            const imagem = document.getElementById('novo-img').value.trim();
 
             if (!nome || !categoria || !link) {
                 alert("Preencha os campos obrigatórios (Nome, Categoria e Link).");
                 return;
             }
 
-            const novoItem = {
-                id: Date.now(),
-                nome: nome,
-                categoria: categoria,
-                link: link,
-                imagem: imagem
-            };
+            if (idEditando !== null) {
+                // Modo Edição
+                const index = produtos.findIndex(p => p.id === idEditando);
+                if (index !== -1) {
+                    produtos[index] = {
+                        ...produtos[index],
+                        nome,
+                        categoria,
+                        preco: preco ? parseFloat(preco) : null,
+                        link,
+                        imagem
+                    };
+                }
+            } else {
+                // Modo Adição
+                const novoItem = {
+                    id: Date.now(),
+                    nome,
+                    categoria,
+                    preco: preco ? parseFloat(preco) : null,
+                    link,
+                    imagem
+                };
+                produtos.unshift(novoItem);
+            }
 
-            produtos.unshift(novoItem);
             salvarStorage();
+            renderizarCategorias();
             renderizarVitrine();
+            limparFormulario();
+        }
 
+        function prepararEdicao(id) {
+            const prod = produtos.find(p => p.id === id);
+            if (!prod) return;
+
+            idEditando = id;
+            document.getElementById('novo-nome').value = prod.nome;
+            document.getElementById('nova-categoria').value = prod.categoria;
+            document.getElementById('novo-preco').value = prod.preco || '';
+            document.getElementById('novo-link').value = prod.link;
+            document.getElementById('novo-img').value = prod.imagem || '';
+
+            document.getElementById('titulo-form').textContent = "Editar Produto";
+            document.getElementById('btn-salvar-prod').textContent = "Atualizar";
+            document.getElementById('btn-cancelar-edicao').style.display = "inline-block";
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function limparFormulario() {
+            idEditando = null;
             document.getElementById('novo-nome').value = "";
             document.getElementById('nova-categoria').value = "";
+            document.getElementById('novo-preco').value = "";
             document.getElementById('novo-link').value = "";
             document.getElementById('novo-img').value = "";
+
+            document.getElementById('titulo-form').textContent = "Adicionar Novo Produto";
+            document.getElementById('btn-salvar-prod').textContent = "Adicionar";
+            document.getElementById('btn-cancelar-edicao').style.display = "none";
         }
 
         function excluirProduto(idProduto) {
             if (confirm("Tem certeza de que deseja remover este produto da vitrine?")) {
                 produtos = produtos.filter(prod => prod.id !== idProduto);
                 salvarStorage();
+                renderizarCategorias();
                 renderizarVitrine();
             }
         }
 
+        // Inicialização
+        renderizarCategorias();
         renderizarVitrine();
     </script>
 </body>
